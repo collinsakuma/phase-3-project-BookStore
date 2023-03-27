@@ -1,11 +1,11 @@
-# Clement and Collin's Bookstore
-This is a Python bookstore application that allows users to search for and purchase books, as well as see available books by location and genre.
+CLI Bookstore
 
+## Description
+This is a CLI applicaiton allowing users to browse the inventory of different book store location and add books to a "shopping cart" displaying the total cost of all books selected. 
 
-# Deliverables
+### Users can:
+- Browse books available by location
+- Search for books by title or genre
+- Add books by id to a "cart" and show the total cost. 
 
-the user must be abble to search for a book by title.
-the user must be abble to see available book by a book store location.
-the user must be abble to search for available book by genre 
-the user must be able to add it to the collection of books
-the user must be abble to see the total amount of books he picked
+Wireframing for db table construction: https://wireframe.cc/6VVkQm
