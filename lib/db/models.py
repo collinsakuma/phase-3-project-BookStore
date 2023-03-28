@@ -7,13 +7,6 @@ engine = create_engine('sqlite:///book_stores.db')
 
 Base = declarative_base()
 
-# store_books = Table(
-#     'store_books',
-#     Base.metadata,
-#     Column('book_id', ForeignKey('books.id'), primary_key=True),
-#     Column('store_id', ForeignKey('stores.id'), primary_key=True)
-# )
-
 class Store(Base):
     __tablename__ = 'stores'
     __table_args__ = (PrimaryKeyConstraint('id'),)
