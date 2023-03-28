@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine
-from sqlalchemy import Column, Integer, String, Float, PrimaryKeyConstraint
+from sqlalchemy import Column, Integer, String, Float, PrimaryKeyConstraint, ForeignKey, Table
 
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -7,6 +7,12 @@ engine = create_engine('sqlite:///book_stores.db')
 
 Base = declarative_base()
 
+# store_books = Table(
+#     'store_books',
+#     Base.metadata,
+#     Column('book_id', ForeignKey('books.id'), primary_key=True),
+#     Column('store_id', ForeignKey('stores.id'), primary_key=True)
+# )
 
 class Store(Base):
     __tablename__ = 'stores'
@@ -22,8 +28,6 @@ class Store(Base):
             + f"Store Name: {self.store_name}," \
             + f"Address: {self.address}," \
             + f"Phone: {self.phone}"
-
-
 
 
 class Book(Base):
