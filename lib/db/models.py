@@ -46,3 +46,16 @@ class Book(Base):
             + f"Author: {self.author}," \
             + f"Genre: {self.genre}," \
             + f"Price: {self.price}"
+
+class Inventory(Base):
+    __tablename__ = 'Inventory'
+    __table_args__ = (PrimaryKeyConstraint('id'),)
+    
+    id = Column(Integer())
+    book_id = Column(Integer(), ForeignKey('books.id'))
+    store_id = Column(Integer(), ForeignKey('stores.id'))
+
+    def __repr__(self):
+        return f"ID: {self.id}," \
+            + f"Book ID: {self.book_id}," \
+            + f"Store ID: {self.store_id}"
