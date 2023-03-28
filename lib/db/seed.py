@@ -4,7 +4,7 @@ from faker import Faker
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from models import Store, Book
+from models import Store, Book, Inventory
 
 engine = create_engine('sqlite:///book_stores.db')
 Session = sessionmaker(bind = engine)
@@ -21,6 +21,7 @@ if __name__ == '__main__':
     # Delete Table Data
     session.query(Store).delete()
     session.query(Book).delete()
+    session.query(Inventory).delete()
 
     book_stores = []
     for store in book_store_names:
@@ -46,3 +47,16 @@ if __name__ == '__main__':
         session.add(book)
         session.commit()
         all_books.append(book)
+
+    book_inventory = []
+    for store in book_stores:
+        for _ in range(random.randint(5,10)):
+            item = Inventory(
+                book_id = random.choice(all_books).id,
+                store_id = store.id
+            )
+
+            session.add(item)
+            session.commit()
+            book_inventory.append(item)
+
