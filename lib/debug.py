@@ -9,5 +9,14 @@ if __name__ == '__main__':
     engine = create_engine('sqlite:///db/book_stores.db')
     Session = sessionmaker(bind=engine)
     session = Session()
-
+    
+    #get first store object
+    first_store = session.query(Store).first()
+    #get list of books with the store id of 1
+    book_list = session.query(Inventory).filter_by(store_id=first_store.id)
+    #get list of book objects
+    end_list = [session.query(Book).get(book.book_id) for book in book_list]
+    print([book for book in end_list])
+    # prints like 
+    # [ID: 95,Title: foot,Author: Michael Hernandez ,Genre: Fiction,Price: 14.09, ID: 95,Title: foot,Author: Michael Hernandez ,Genre: Fiction,Price: 14.09, .....
     ipdb.set_trace()

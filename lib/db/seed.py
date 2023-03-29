@@ -28,7 +28,7 @@ if __name__ == '__main__':
         b_store = Store(
             store_name = store,
             address = fake.address(),
-            phone = fake.phone_number()
+            phone = f"({random.randint(100,999)})-{random.randint(100,999)}-{random.randint(1000,9999)}"
         )
         
         session.add(b_store)

@@ -2,6 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy import Column, Integer, String, Float, PrimaryKeyConstraint, ForeignKey, Table
 
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship, backref
 
 engine = create_engine('sqlite:///book_stores.db')
 
@@ -47,6 +48,9 @@ class Inventory(Base):
     id = Column(Integer())
     book_id = Column(Integer(), ForeignKey('books.id'))
     store_id = Column(Integer(), ForeignKey('stores.id'))
+
+    book = relationship('Book', backref=backref('books.id'))
+    store = relationship('Store', backref=backref('stores.id'))
 
     def __repr__(self):
         return f"ID: {self.id}," \
