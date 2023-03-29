@@ -19,4 +19,8 @@ if __name__ == '__main__':
     print([book for book in end_list])
     # prints like 
     # [ID: 95,Title: foot,Author: Michael Hernandez ,Genre: Fiction,Price: 14.09, ID: 95,Title: foot,Author: Michael Hernandez ,Genre: Fiction,Price: 14.09, .....
+    
+    
+    #query = session.query(Sighting).filter(Sighting.id == '1').all()
+    query = session.query(Store).filter(Store.id == '1').all()
     ipdb.set_trace()
