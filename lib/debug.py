@@ -18,9 +18,12 @@ if __name__ == '__main__':
     end_list = [session.query(Book).get(book.book_id) for book in book_list]
     print([book for book in end_list])
     # prints like 
-    # [ID: 95,Title: foot,Author: Michael Hernandez ,Genre: Fiction,Price: 14.09, ID: 95,Title: foot,Author: Michael Hernandez ,Genre: Fiction,Price: 14.09, .....
+    # [ID: 95,Title: foot,Author: Michael Hernandez ,Genre: Fiction,Price: 14.09, 
+    #  ID: 95,Title: foot,Author: Michael Hernandez ,Genre: Fiction,Price: 14.09, .....
     
     
     #query = session.query(Sighting).filter(Sighting.id == '1').all()
     query = session.query(Store).filter(Store.id == '1').all()
+    book_to_purchase = session.query(Book).filter(Book.id == '1').all()
+    # book_to_purchase[0].title
     ipdb.set_trace()
