@@ -25,9 +25,8 @@ def create_stores_table(stores):
 
     print(table)
 
-def create_inventory_table():
-    first_store = session.query(Store).first()
-    book_list = session.query(Inventory).filter_by(store_id=first_store.id)
+def create_inventory_table(store_id):
+    book_list = session.query(Inventory).filter_by(store_id=store_id)
     end_list = [session.query(Book).get(book.book_id) for book in book_list]
     table = PrettyTable()
     table.title = 'Blank Book Store'
@@ -43,18 +42,19 @@ def create_inventory_table():
     
     print(table)
 
-
-
-
-def cli_start():
-
-    select = ''
-    while select != 'e':
+def cli_start_menu():
         print('''
             [search (a)] -- Search for book by Title
             [stores (b)] -- Browse books by Store
             [exit   (e)] -- Leave 
         ''') 
+
+
+def cli_start():
+
+    select = ''
+    cli_start_menu()
+    while select != 'e':
 
         if (select == 'a'):
             search_by_book()
@@ -73,7 +73,26 @@ def browse_by_stores():
         create_stores_table(stores) 
 
         select = click.prompt('Choose store to browse or e to leave')
-
+        # ewww fix this
         if (select == "1"):
-            create_inventory_table()
-        
+            create_inventory_table('1')
+        if (select == "2"):
+            create_inventory_table('2')
+        if (select == "3"):
+            create_inventory_table('3')
+        if (select == "4"):
+            create_inventory_table('4')
+        if (select == "5"):
+            create_inventory_table('5')
+        if (select == "6"):
+            create_inventory_table('6')
+        if (select == "6"):
+            create_inventory_table('6')
+        if (select == "7"):
+            create_inventory_table('7')
+        if (select == "8"):
+            create_inventory_table('8')
+        if (select == "9"):
+            create_inventory_table('9')
+        if (select == "10"):
+            create_inventory_table('10')
