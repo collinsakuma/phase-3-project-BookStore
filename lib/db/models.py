@@ -56,3 +56,19 @@ class Inventory(Base):
         return f"ID: {self.id}," \
             + f"Book ID: {self.book_id}," \
             + f"Store ID: {self.store_id}"
+
+class Cart(Base):
+    __tablename__ = 'Cart'
+    __table_args__ = (PrimaryKeyConstraint('id'),)
+
+    id = Column(Integer())
+    book_id = Column(Integer())
+    title = Column(String())
+    price = Column(Float())
+
+    def __repr__(self):
+        return f"ID: {self.id}," \
+            + f"Book ID: {self.book_id}," \
+            + f"Title: {self.title}," \
+            + f"Price: {self.price}"
+
