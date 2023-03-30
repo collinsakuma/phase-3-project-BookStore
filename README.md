@@ -12,7 +12,7 @@ Wireframing for db table construction: https://wireframe.cc/6VVkQm
 
 ## Instructions
 
-After cloning repository to your local machine and navigating to the project directory make sure to install required packages with:
+After cloning the repository to your local machine and navigating to the project directory make sure to install required packages with:
 ```
 pipenv install
 ```
@@ -30,9 +30,9 @@ alembic upgrade head
 ```
 then run:
 ```
-python db/seed.py
+python seed.py
 ```
-to run the CLI app cd back into the lib directory and run:
+to run the CLI app navitage back into the /lib directory and run:
 ```
 python cli.py
 ```
