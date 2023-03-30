@@ -24,12 +24,7 @@ Navigate to the db directory with:
 ```
 cd lib/db
 ```
-to create the database and data run:
-```
-alembic upgrade head
-```
-then run:
-```
+to create database data run:
 python seed.py
 ```
 to run the CLI app navitage back into the /lib directory and run:
