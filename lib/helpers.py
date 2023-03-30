@@ -44,9 +44,10 @@ def create_inventory_table(store_id):
 
 def cli_start_menu():
         print('''
-            [search (a)] -- Search for book by Title
-            [stores (b)] -- Browse books by Store
-            [exit   (e)] -- Leave 
+    [Title  (a)] -- Search for book by Title
+    [Genre  (b)] -- Search by Genre
+    [Store  (c)] -- Browse books by Store
+    [exit   (e)] -- Checkout or Exit 
         ''') 
 
 
@@ -59,6 +60,8 @@ def cli_start():
         if (select == 'a'):
             search_by_book()
         if (select == 'b'):
+            search_by_genre()
+        if (select == 'c'):
             browse_by_stores()
 
         select = click.prompt('Select Prompt')
@@ -81,32 +84,95 @@ def search_by_book():
             book.genre,
             book.price
         ])
-
     print(table)
+    add_book_to_cart()
+    
+def search_by_genre():
+    print('''
+    Genres:
+    1. Biography                6.  Graphic Novel   11. Non-fiction
+    2. Children's Literature    7.  Horror          12. Poetry
+    3. Fairy Tale               8.  Memoir          13. Science Fiction
+    4. Fantasy                  9.  Mystery         14. Thriller
+    5. Fiction                  10. Mythology       15. Young Adult
+    ''')
+    select = click.prompt("Choose Genre or 'e' to go back")
+    if select == 'e':
+        cli_start_menu()
+    elif int(select) in range(1,16):
+        genre_list = ['Biography','Children\'s literature','Fairy tale','Fantasy','Fiction','Graphic novel'
+                    ,'Horror','Memoir','Mystery','Mythology','Non-fiction','Poetry','Science fiction'
+                    ,'Thriller','Young adult']
+        chosen_genre = (genre_list[int(select)-1])
+        books_matching_genre = session.query(Book).filter_by(genre=chosen_genre).all()
+        table = PrettyTable()
+        table.title = f"{chosen_genre} Books"
+        table.field_names = ['id', 'title', 'author', 'genre', 'price']
+        for book in books_matching_genre:
+            table.add_row([
+                book.id,
+                book.title,
+                book.author,
+                book.genre,
+                book.price
+            ])
+        print(table)
+        add_book_to_cart()
+
 
 def browse_by_stores():
     stores = session.query(Store)
     create_stores_table(stores) 
 
     select = click.prompt('Choose store to browse or \'e\' to leave')
-
-    if select in ['1','2','3','4','5','6','7','8','9','10']:
+    if select == 'e':
+        cli_start_menu()
+    elif int(select) in range(1,11):
         create_inventory_table(select)
-            
-        # while select != 'e':
-        select = click.prompt('Pick a book to purchase')
-        if int(select) in range(1,100):
-            book_to_purchase = session.query(Book).filter(Book.id == select).all()
-            print(book_to_purchase)
-            added_book = Cart(
-                book_id = book_to_purchase[0].id,
-                title = book_to_purchase[0].title,
-                price = book_to_purchase[0].price
-            )
-            session.add(added_book)
-            session.commit()
-            cli_start_menu()
+        add_book_to_cart()
+
+def add_book_to_cart():
+    select = click.prompt('Enter ID of Book to add to Cart or exit with \'e\'')
+    if select =='e':
+        cli_start_menu()
+    elif int(select) in range(1,101):
+        book_to_purchase = session.query(Book).filter(Book.id == select).all()
+        print(book_to_purchase)
+        added_book = Cart(
+            book_id = book_to_purchase[0].id,
+            title = book_to_purchase[0].title,
+            price = book_to_purchase[0].price
+        )
+        session.add(added_book)
+        session.commit()
+        print('''
+        continue shopping or checkout/leave with 'e'
+        ''')
+        cli_start_menu()
 
 
-def check_out_message():
-    print('total is....')
+def cli_end():
+    books_in_cart = session.query(Cart).all()
+    if len(books_in_cart) > 0:
+        print([book for book in books_in_cart])
+        cart_total = 0
+        for book in books_in_cart:
+            cart_total += book.price
+        table = PrettyTable()
+        table.title = 'Books in Cart'
+        table.field_names = ['Book ID', 'Title', 'Price']
+        for book in books_in_cart:
+            table.add_row([
+                book.book_id,
+                book.title,
+                f"$ {book.price}"
+            ])
+
+        print(table)
+        print("$" + "%.2f" % cart_total)
+    else:
+        print('no books in cart')
+    
+    
+    print('thank you come again!')
+    
