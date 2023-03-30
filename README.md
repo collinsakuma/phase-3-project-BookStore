@@ -12,11 +12,23 @@ This is a CLI applicaiton allowing users to browse the inventory of different bo
 
 After cloning repository to your local machine and navigating to the project directory make sure to install required packages with:
 ```
-$ pipenv install
+pipenv install
 ```
-Nest start a virtual environment with:
+Next start a virtual environment with:
 ```
-$ pipenv shell
+pipenv shell
+```
+Navigate to the db directory with:
+```
+cd lib/db
+```
+to create the database and data run:
+```
+alembic upgrade head
+```
+then run:
+```
+python db/seed.py
 ```
 Wireframing for db table construction: https://wireframe.cc/6VVkQm
 
