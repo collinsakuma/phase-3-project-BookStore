@@ -8,6 +8,8 @@ This is a CLI applicaiton allowing users to browse the inventory of different bo
 - Search for books by title or genre
 - Add books by id to a "cart" and show the total cost. 
 
+Wireframing for db table construction: https://wireframe.cc/6VVkQm
+
 ## Instructions
 
 After cloning repository to your local machine and navigating to the project directory make sure to install required packages with:
@@ -34,5 +36,3 @@ to run the CLI app cd back into the lib directory and run:
 ```
 python cli.py
 ```
-Wireframing for db table construction: https://wireframe.cc/6VVkQm
-
