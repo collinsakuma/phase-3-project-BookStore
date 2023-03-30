@@ -28,6 +28,4 @@ to create database data run:
 python seed.py
 ```
 to run the CLI app navitage back into the /lib directory and run:
-```
-python cli.py
-```
+
