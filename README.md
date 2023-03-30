@@ -30,5 +30,9 @@ then run:
 ```
 python db/seed.py
 ```
+to run the CLI app cd back into the lib directory and run:
+```
+python cli.py
+```
 Wireframing for db table construction: https://wireframe.cc/6VVkQm
 
