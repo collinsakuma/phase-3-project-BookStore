@@ -25,7 +25,20 @@ Navigate to the db directory with:
 cd lib/db
 ```
 to create database data run:
+```
+revision --autogenerate -m 'test'
+```
+Next Run:
+```
+alembic upgrade head
+```
+To create data for the Database Run:
+```
 python seed.py
 ```
 to run the CLI app navitage back into the /lib directory and run:
+```
+cli.py 
+```
+
 
