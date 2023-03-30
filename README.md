@@ -12,7 +12,7 @@ This is a CLI applicaiton allowing users to browse the inventory of different bo
 
 After cloning repository to your local machine and navigating to the project directory make sure to install required packages with:
 
-$ pipenv install
+``` pipenv install```
 
 Wireframing for db table construction: https://wireframe.cc/6VVkQm
 
