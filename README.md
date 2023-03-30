@@ -26,7 +26,7 @@ cd lib/db
 ```
 to create database data run:
 ```
-revision --autogenerate -m 'test'
+alembic revision --autogenerate -m 'test'
 ```
 Next Run:
 ```
