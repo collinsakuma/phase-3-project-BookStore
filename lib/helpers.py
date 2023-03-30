@@ -26,10 +26,13 @@ def create_stores_table(stores):
     print(table)
 
 def create_inventory_table(store_id):
+    store_names = ['Book Addict','Book Bin','Hooked on Books','The Book Worm','A Likely Story'
+                    ,'Books 4 Less','Open Books','Neighborhood Books','Booked','The Book Store']
+    chosen_store = store_names[int(store_id)-1]
     book_list = session.query(Inventory).filter_by(store_id=store_id)
     store_inventory = [session.query(Book).get(book.book_id) for book in book_list]
     table = PrettyTable()
-    table.title = 'Blank Book Store'
+    table.title = f"{chosen_store}"
     table.field_names = ['id', 'title', 'author', 'genre', 'price']
     for book in store_inventory:
         table.add_row([
@@ -55,8 +58,6 @@ def cli_start():
     select = ''
     cli_start_menu()
     while select != 'e':
-        # shopping_cart = []
-
         if (select == 'a'):
             search_by_book()
         if (select == 'b'):
@@ -65,7 +66,6 @@ def cli_start():
             browse_by_stores()
 
         select = click.prompt('Select Prompt')
-    # print([book for book in shopping_cart])
 
 def search_by_book():
     title = click.prompt('Enter book title to search for')
@@ -135,9 +135,10 @@ def add_book_to_cart():
     select = click.prompt('Enter ID of Book to add to Cart or exit with \'e\'')
     if select =='e':
         cli_start_menu()
-    elif int(select) in range(1,101):
+    elif int(select) in range(1,118):
         book_to_purchase = session.query(Book).filter(Book.id == select).all()
-        print(book_to_purchase)
+        print('')
+        print(f"\"{book_to_purchase[0].title}\" added to Cart")
         added_book = Cart(
             book_id = book_to_purchase[0].id,
             title = book_to_purchase[0].title,
@@ -146,7 +147,7 @@ def add_book_to_cart():
         session.add(added_book)
         session.commit()
         print('''
-        continue shopping or checkout/leave with 'e'
+continue shopping or checkout/leave with 'e'
         ''')
         cli_start_menu()
 
@@ -154,7 +155,6 @@ def add_book_to_cart():
 def cli_end():
     books_in_cart = session.query(Cart).all()
     if len(books_in_cart) > 0:
-        print([book for book in books_in_cart])
         cart_total = 0
         for book in books_in_cart:
             cart_total += book.price
@@ -169,10 +169,10 @@ def cli_end():
             ])
 
         print(table)
-        print("$" + "%.2f" % cart_total)
+        print("\n""Your total is: "+"$" + "%.2f" % cart_total)
     else:
         print('no books in cart')
     
     
-    print('thank you come again!')
+    print("\n"'thank you come again!')
     
