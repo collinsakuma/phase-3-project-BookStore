@@ -68,7 +68,7 @@ def cli_start():
         select = click.prompt('Select Prompt')
 
 def search_by_book():
-    title = click.prompt('Enter book title to search for')
+    title = click.prompt('\nEnter book title to search for')
     books = session.query(Book).filter_by(title=title).all()
     if not books:
         print('No results found.')
@@ -141,7 +141,7 @@ def browse_by_stores():
         browse_by_stores()
 
 def add_book_to_cart():
-    select = click.prompt('Enter Book ID to add to Cart or exit with \'e\'')
+    select = click.prompt('\nEnter Book ID to add to Cart or exit with \'e\'')
     try:
         if select =='e':
             cli_start_menu()
@@ -178,7 +178,7 @@ def cli_end():
             table.add_row([
                 book.book_id,
                 book.title,
-                f"$ {book.price}"
+                f"$ {book.price:.2f}"
             ])
 
         print(table)
@@ -187,5 +187,17 @@ def cli_end():
         print('no books in cart')
     
     
-    print("\n"'thank you come again!')
+    print('''
+       .--.           .---.        .-.
+   .---|--|   .-.     |~~~|  .---. |~|    .--.
+.--|===|Od|---|_|--.__| D |--|:::| |~|-==-|==|---.
+|%%|Lev|ys|===| |~~|%%| u |--|   |_|~|1984|  |___|-.
+|  |iat|se|===| |==|  | n |  |:::|=| |    |It|---|=|
+|  |han|y |   |_|__|  | e |__|   | | |    |  |___| |
+|~~|===|--|===|~|~~|%%|~~~|--|:::|=|~|----|==|---|=|
+^--^---'--^---^-^--^--^---'--^---^-^-^-==-^--^---^-'
+
+               Thank you come again!
+
+    ''')
     
