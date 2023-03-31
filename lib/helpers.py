@@ -72,20 +72,21 @@ def search_by_book():
     books = session.query(Book).filter_by(title=title).all()
     if not books:
         print('No results found.')
-
-    table = PrettyTable()
-    table.title = f'Results for "{title}"'
-    table.field_names = ['id', 'title', 'author', 'genre', 'price']
-    for book in books:
-        table.add_row([
-            book.id,
-            book.title,
-            book.author,
-            book.genre,
-            book.price
-        ])
-    print(table)
-    add_book_to_cart()
+        cli_start_menu()
+    else:
+        table = PrettyTable()
+        table.title = f'Results for "{title}"'
+        table.field_names = ['id', 'title', 'author', 'genre', 'price']
+        for book in books:
+            table.add_row([
+                book.id,
+                book.title,
+                book.author,
+                book.genre,
+                book.price
+            ])
+        print(table)
+        add_book_to_cart()
     
 def search_by_genre():
     print('''
@@ -97,59 +98,71 @@ def search_by_genre():
     5. Fiction                  10. Mythology       15. Young Adult
     ''')
     select = click.prompt("Choose Genre or 'e' to go back")
-    if select == 'e':
-        cli_start_menu()
-    elif int(select) in range(1,16):
-        genre_list = ['Biography','Children\'s literature','Fairy tale','Fantasy','Fiction','Graphic novel'
-                    ,'Horror','Memoir','Mystery','Mythology','Non-fiction','Poetry','Science fiction'
-                    ,'Thriller','Young adult']
-        chosen_genre = (genre_list[int(select)-1])
-        books_matching_genre = session.query(Book).filter_by(genre=chosen_genre).all()
-        table = PrettyTable()
-        table.title = f"{chosen_genre} Books"
-        table.field_names = ['id', 'title', 'author', 'genre', 'price']
-        for book in books_matching_genre:
-            table.add_row([
-                book.id,
-                book.title,
-                book.author,
-                book.genre,
-                book.price
-            ])
-        print(table)
-        add_book_to_cart()
+    try:
+        if select == 'e':
+            cli_start_menu()
+        elif int(select) in range(1,16):
+            genre_list = ['Biography','Children\'s literature','Fairy tale','Fantasy','Fiction','Graphic novel'
+                        ,'Horror','Memoir','Mystery','Mythology','Non-fiction','Poetry','Science fiction'
+                        ,'Thriller','Young adult']
+            chosen_genre = (genre_list[int(select)-1])
+            books_matching_genre = session.query(Book).filter_by(genre=chosen_genre).all()
+            table = PrettyTable()
+            table.title = f"{chosen_genre} Books"
+            table.field_names = ['id', 'title', 'author', 'genre', 'price']
+            for book in books_matching_genre:
+                table.add_row([
+                    book.id,
+                    book.title,
+                    book.author,
+                    book.genre,
+                    book.price
+                ])
+            print(table)
+            add_book_to_cart()
+    except ValueError:
+        print('Invalid Input')
+        search_by_genre()
 
 
 def browse_by_stores():
     stores = session.query(Store)
     create_stores_table(stores) 
 
-    select = click.prompt('Choose store to browse or \'e\' to leave')
-    if select == 'e':
-        cli_start_menu()
-    elif int(select) in range(1,11):
-        create_inventory_table(select)
-        add_book_to_cart()
+    select = click.prompt('Enter store ID to view its inventory or \'e\' to leave')
+    try:
+        if select == 'e':
+            cli_start_menu()
+        elif int(select) in range(1,11):
+            create_inventory_table(select)
+            add_book_to_cart()
+    except ValueError:
+        print('Invalid Input')
+        browse_by_stores()
 
 def add_book_to_cart():
-    select = click.prompt('Enter ID of Book to add to Cart or exit with \'e\'')
-    if select =='e':
-        cli_start_menu()
-    elif int(select) in range(1,118):
-        book_to_purchase = session.query(Book).filter(Book.id == select).all()
-        print('')
-        print(f"\"{book_to_purchase[0].title}\" added to Cart")
-        added_book = Cart(
-            book_id = book_to_purchase[0].id,
-            title = book_to_purchase[0].title,
-            price = book_to_purchase[0].price
-        )
-        session.add(added_book)
-        session.commit()
-        print('''
+    select = click.prompt('Enter Book ID to add to Cart or exit with \'e\'')
+    try:
+        if select =='e':
+            cli_start_menu()
+        elif int(select) in range(1,118):
+            book_to_purchase = session.query(Book).filter(Book.id == select).all()
+            print('')
+            print(f"\"{book_to_purchase[0].title}\" added to Cart")
+            added_book = Cart(
+                book_id = book_to_purchase[0].id,
+                title = book_to_purchase[0].title,
+                price = book_to_purchase[0].price
+            )
+            session.add(added_book)
+            session.commit()
+            print('''
 continue shopping or checkout/leave with 'e'
-        ''')
-        cli_start_menu()
+            ''')
+            cli_start_menu()
+    except ValueError:
+        print('Invalid Input')
+        add_book_to_cart()
 
 
 def cli_end():
